@@ -1,0 +1,66 @@
+﻿@model TeaTimeDemo.Models.ViewModels.SurveyVM
+
+@{
+    ViewData["Title"] = "問卷管理";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <!-- 隱藏欄位：問卷的 Id -->
+    <input type="hidden" asp-for="Survey.Id" />
+    <!-- 隱藏欄位：存儲 TinyMCE 編輯器的 HTML 內容 -->
+    <input type="hidden" id="MceHtml" name="MceHtml" value="@Model.MceHtml" />
+
+    <div class="row equal-height">
+        <div class="col-md-6">
+            <div class="border p-3 mt-4 form-section">
+                <h2 class="text-primary">@(Model.Survey.Id != 0 ? "編輯" : "新增") 問卷</h2>
+                <hr />
+
+                <!-- 加載問卷基本資訊部分 -->
+                <partial name="Partials/SurveyInfoPartial" model="Model" />
+
+                <!-- 表單提交與返回按鈕 -->
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">保存問卷</button>
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-controller="Survey" asp-action="Index" class="btn btn-secondary form-control">返回</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6 editor-section">
+            <textarea id="editor">@Model.MceHtml</textarea>
+        </div>
+    </div>
+</form>
+
+<div id="survey-image-preview"></div>
+<div id="questions"></div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- 引入 TinyMCE 腳本 -->
+    <script src="~/lib/tinymce/tinymce.min.js"></script>
+
+    <!-- 傳遞伺服器端資料到 JavaScript -->
+    <script>
+        window.initialData = {
+            questionCount: @Model.QuestionVMs.Count,
+            optionsIndices: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.QuestionVMs.Select((qvm, index) => new { index, count = qvm.QuestionOptionVMs.Count })
+                .ToDictionary(x => x.index, x => x.count)
+            )),
+            questionTypeList: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.QuestionTypeList.Select(qt => new { qt.Value, qt.Text })
+            ))
+        };
+    </script>
+
+    <!-- 引入外部 JavaScript 文件 -->
+    <script src="~/js/editor.js" asp-append-version="true"></script>
+}

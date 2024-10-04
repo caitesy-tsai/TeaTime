@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.102.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.8" />
+  </ItemGroup>
+
+</Project>
