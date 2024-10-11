@@ -18,7 +18,7 @@ namespace TeaTimeDemo.Models
 
         // 指定 QuestionId 是外鍵，關聯到 Question 表
         [ForeignKey("QuestionId")]
-        public Question Question { get; set; }
+        public virtual  Question Question { get; set; }
 
         // 使用者的外鍵欄位，連接到 ApplicationUser 表，追蹤誰回答了這個問題
         public string? ApplicationUserId { get; set; }
@@ -26,7 +26,7 @@ namespace TeaTimeDemo.Models
         // 指定這個欄位是外鍵，對應到 ApplicationUser 資料表
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         // 動態生成使用者姓名，防止此屬性被序列化到 JSON
         [JsonIgnore]

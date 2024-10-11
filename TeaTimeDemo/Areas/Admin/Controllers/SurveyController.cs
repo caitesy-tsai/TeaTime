@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Hosting; // 用來處理圖片上傳
 using System.IO; // 處理文件操作
 using Microsoft.AspNetCore.Http;
 using ClosedXML.Excel; // 新增此命名空間以使用 IFormFile
+using AutoMapper;
+using TeaTimeDemo.DTOs; // 引用 SurveyDTO 的命名空間
 
 namespace TeaTimeDemo.Areas.Admin.Controllers
 {
@@ -25,6 +27,8 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnvironment; // 用於處理圖片上傳的環境變數
         private readonly IImageService _imageService; // 使用 IImageService 處理圖片
+        private readonly IMapper _mapper; // 注入 IMapper
+
 
         /// <summary>
         /// 建構子，注入 IUnitOfWork、IWebHostEnvironment 與 IImageService
@@ -32,11 +36,12 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
         /// <param name="unitOfWork">單元工作介面</param>
         /// <param name="hostEnvironment">網站宿主環境</param>
         /// <param name="imageService">圖片服務介面</param>
-        public SurveyController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, IImageService imageService)
+        public SurveyController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, IImageService imageService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
             _imageService = imageService;
+            _mapper = mapper; // 賦值
         }
 
         /// <summary>
@@ -45,10 +50,9 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
         /// <returns>問卷列表視圖</returns>
         public IActionResult Index()
         {
-            // 取得所有問卷並包括建立人的資訊
-            List<Survey> surveyList = _unitOfWork.Survey.GetAll(includeProperties: "ApplicationUser").ToList();
-            return View(surveyList); // 返回問卷列表視圖
+            return View(); // 不再傳遞 surveyList，讓 DataTables 使用 AJAX 獲取資料
         }
+
 
 
         /// <summary>
@@ -62,12 +66,12 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
             SurveyVM surveyVM = new()
             {
                 Survey = new Survey(),
-                StationList = _unitOfWork.Station.GetAll().Select(s => new SelectListItem { Text = s.Name, Value = s.Name }),
-                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem { Text = c.Name, Value = c.Name }),
-                QuestionTypeList = GetQuestionTypeList(), // 動態生成問題類型的下拉選單
+                StationList = _unitOfWork.Station.GetAll().Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() }),
+                CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }),
+                QuestionTypeList = GetQuestionTypeList(),
                 MceHtml = id != null && id > 0
-                            ? _unitOfWork.Survey.Get(s => s.Id == id, includeProperties: "Questions,Questions.QuestionOptions")?.MceHtml
-                            : string.Empty // 初始化 MceHtml，如果是編輯模式則取得現有內容，否則為空
+                            ? _unitOfWork.Survey.Get(s => s.Id == id, includeProperties: "Questions,Questions.QuestionOptions,Category")?.MceHtml
+                            : string.Empty
             };
 
             // 如果有傳入 ID，表示是編輯問卷
@@ -76,7 +80,7 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
                 // 從資料庫中取得指定 ID 的問卷資料，不包括圖片
                 surveyVM.Survey = _unitOfWork.Survey.Get(
                     s => s.Id == id,
-                    includeProperties: "Questions,Questions.QuestionOptions");
+                    includeProperties: "Questions,Questions.QuestionOptions,Category");
                 if (surveyVM.Survey == null)
                 {
                     return NotFound();
@@ -153,7 +157,7 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
                     var existingSurvey = _unitOfWork.Survey.GetFirstOrDefault(s => s.Id == surveyVM.Survey.Id);
                     if (existingSurvey != null)
                     {
-                        existingSurvey.CategoryName = surveyVM.Survey.CategoryName;
+                        existingSurvey.CategoryId = surveyVM.Survey.CategoryId; // 設置 CategoryId
                         existingSurvey.Title = surveyVM.Survey.Title;
                         existingSurvey.Description = surveyVM.Survey.Description;
                         existingSurvey.StationName = surveyVM.Survey.StationName;
@@ -333,39 +337,13 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index)); // 保存後重定向到問卷列表頁面
             }
 
-            // 如果表單驗證失敗，重新加載站別與分類下拉選單數據
-            surveyVM.StationList = _unitOfWork.Station.GetAll().Select(s => new SelectListItem { Text = s.Name, Value = s.Name });
-            surveyVM.CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem { Text = c.Name, Value = c.Name });
+            // 如果表單驗證失敗，重新加載站別與分類下拉選單數據            
+            surveyVM.StationList = _unitOfWork.Station.GetAll().Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
+            surveyVM.CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
             surveyVM.QuestionTypeList = GetQuestionTypeList();
             return View(surveyVM); // 返回帶有錯誤提示的視圖
         }
 
-        /*
-        // 儲存圖片到伺服器並返回圖片路徑的方法
-        private string SaveImage(IFormFile image)
-        {
-            if (image != null && image.Length > 0)
-            {
-                var imageFolder = Path.Combine(_hostEnvironment.WebRootPath, "images", "survey"); // 設定圖片儲存的資料夾
-                var imageName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName); // 生成唯一的圖片名稱
-                var imagePath = Path.Combine(imageFolder, imageName);
-
-                // 確保目錄存在
-                if (!Directory.Exists(imageFolder))
-                {
-                    Directory.CreateDirectory(imageFolder);// 如果目錄不存在，則創建目錄
-                }
-
-                using (var fileStream = new FileStream(imagePath, FileMode.Create))
-                {
-                    image.CopyTo(fileStream); // 將圖片寫入到伺服器上
-                }
-
-                return "/images/survey/" + imageName; // 返回圖片的相對路徑
-            }
-            return null;
-        }
-        */
 
         /// <summary>
         /// 刪除圖片的功能 (AJAX)
@@ -588,9 +566,18 @@ namespace TeaTimeDemo.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var surveyList = _unitOfWork.Survey.GetAll(includeProperties: "ApplicationUser"); // 包括建立者的資料
-            return Json(new { data = surveyList });
+            var surveyList = _unitOfWork.Survey.GetAll(includeProperties: "ApplicationUser,Category");
+            var surveyDTOList = _mapper.Map<IEnumerable<SurveyDTO>>(surveyList);
+
+            // 調試輸出
+            foreach (var survey in surveyDTOList)
+            {
+                Console.WriteLine($"Survey ID: {survey.Id}, CategoryName: {survey.CategoryName}");
+            }
+
+            return Json(new { data = surveyDTOList });
         }
+
 
 
         /// <summary>

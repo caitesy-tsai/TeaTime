@@ -18,6 +18,9 @@ namespace TeaTimeDemo.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -330,19 +333,19 @@ namespace TeaTimeDemo.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "茶飲"
+                            Name = "硬板"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "水果茶"
+                            Name = "汽車板"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "咖啡"
+                            Name = "軟硬板"
                         });
                 });
 
@@ -749,9 +752,8 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CompleteTime")
                         .HasColumnType("datetime2");
@@ -795,6 +797,8 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Surveys");
                 });
@@ -1012,7 +1016,15 @@ namespace TeaTimeDemo.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
+                    b.HasOne("TeaTimeDemo.Models.Category", "Category")
+                        .WithMany("Surveys")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("TeaTimeDemo.Models.ApplicationUser", b =>
@@ -1027,6 +1039,11 @@ namespace TeaTimeDemo.DataAccess.Migrations
             modelBuilder.Entity("TeaTimeDemo.Models.Answer", b =>
                 {
                     b.Navigation("SelectedOptions");
+                });
+
+            modelBuilder.Entity("TeaTimeDemo.Models.Category", b =>
+                {
+                    b.Navigation("Surveys");
                 });
 
             modelBuilder.Entity("TeaTimeDemo.Models.Question", b =>

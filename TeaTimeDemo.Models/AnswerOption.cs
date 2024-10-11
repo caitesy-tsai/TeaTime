@@ -21,13 +21,13 @@ namespace TeaTimeDemo.Models
         public int AnswerId { get; set; }
 
         [ForeignKey("AnswerId")]
-        public Answer Answer { get; set; }
+        public virtual Answer Answer { get; set; }
 
         // 選項的外鍵，指向 QuestionOption
         public int QuestionOptionId { get; set; }
 
         [ForeignKey("QuestionOptionId")]
-        public QuestionOption QuestionOption { get; set; }
+        public virtual QuestionOption QuestionOption { get; set; }
 
         // 是否是正確的答案選項
         public bool IsCorrect { get; set; }

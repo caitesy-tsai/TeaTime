@@ -18,7 +18,7 @@ namespace TeaTimeDemo.Models
 
         // 外鍵關聯：連接到 Survey 表（問卷表）
         [ForeignKey("SurveyId")]
-        public Survey Survey { get; set; } // 導航屬性，連接到問卷資料
+        public virtual Survey Survey { get; set; } // 虛擬導航屬性，連接到問卷資料
 
         // 問題文本內容，限制字元長度不超過 500 個字元，為必填欄位
         [Required]
@@ -27,6 +27,7 @@ namespace TeaTimeDemo.Models
 
         // 枚舉類型，定義問題的回答形式（例如：單選、多選、填空等）
         public AnswerTypeEnum AnswerType { get; set; }
+
 
         // 關聯到該問題的圖片集合
         // 使用 virtual 可支援延遲加載，並初始化為一個空的 List

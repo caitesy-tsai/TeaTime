@@ -19,3 +19,4 @@ C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.DataAccess\obj\Debug\net8.0\
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.DataAccess\obj\Debug\net8.0\ref\TeaTimeDemo.DataAccess.dll
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.DataAccess\bin\Debug\net8.0\TeaTimeDemo.Hubs.dll
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.DataAccess\bin\Debug\net8.0\TeaTimeDemo.Hubs.pdb
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.DataAccess\obj\Debug\net8.0\TeaTimeDemo.DataAccess.sourcelink.json

@@ -13,6 +13,10 @@ namespace TeaTimeDemo.Models.ViewModels
         [ValidateNever]
         public IEnumerable<SelectListItem> QuestionList { get; set; }
 
+        // 問題選項的下拉選單
+        [ValidateNever]
+        public IEnumerable<SelectListItem> QuestionOptionList { get; set; }
+
         public List<QuestionImage> QuestionOptionImages { get; set; } = new List<QuestionImage>();
 
         // 新增這一行，用於接收選項的圖片

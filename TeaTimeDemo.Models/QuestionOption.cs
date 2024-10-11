@@ -21,7 +21,7 @@ namespace TeaTimeDemo.Models
 
         // 指定 QuestionId 是外鍵，關聯到 Question 表
         [ForeignKey("QuestionId")]
-        public Question Question { get; set; } // 導航屬性，連接到問題的資料
+        public virtual Question Question { get; set; } // 虛擬導航屬性，連接到問題的資料
 
         // 選項的文本內容，必填，限制字元數不超過 500 個字元
         [Required(ErrorMessage = "選項文本是必填欄位")]

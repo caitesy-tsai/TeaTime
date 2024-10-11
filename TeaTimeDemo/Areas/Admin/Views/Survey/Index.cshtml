@@ -58,35 +58,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.CategoryName</td>
-                        <td>@item.Title</td>
-                        <td>@item.StationName</td>
-                        <td>@item.Description</td>
-                        <td>@item.QuestionNum</td>
-                        <td>@item.IsPublished ? "是" : "否"</td>
-                        <td>@item.CreateTime?.ToString("yyyy/MM/dd HH:mm:ss")</td>
-                        <td>@item.CompleteTime?.ToString("yyyy/MM/dd HH:mm:ss") ?? "未完成"</td>
-                        <td>@item.JobName</td>
-                        <td>
-                            <div class="w-100 btn-group" role="group">
-                                <a href="/admin/survey/upsert?id=@item.Id" class="btn btn-warning mx-2">
-                                    <i class="bi bi-pencil-square"></i> 編輯
-                                </a>
-                                <button class="btn btn-danger mx-2" onclick="Delete('/admin/survey/delete/@item.Id')">
-                                    <i class="bi bi-trash-fill"></i> 刪除
-                                </button>
-                                <button class="btn btn-secondary mx-2" onclick="togglePublish(@item.Id)">
-                                    <i class="bi bi-check-square"></i> @item.IsPublished ? "取消發佈" : "發佈"
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                }
+                <!-- 由 DataTables 通過 AJAX 填充資料 -->
             </tbody>
         </table>
+
     </div>
 </div>
 

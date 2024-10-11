@@ -1,8 +1,6 @@
 ﻿// 等待文檔加載完成後執行
 $(document).ready(function () {
     initializeTinyMCE();
-    handleFormChanges();
-    handleFormSubmit();
     initializeQuestionIndices();
 });
 
@@ -11,12 +9,12 @@ function initializeTinyMCE() {
     tinymce.init({
         selector: '#editor',
         api_key: 'bd4kr41e6ze0pbf2aykxdz4hsbpnedbrhpjj227b6za85wou', // 替換為您的 API 金鑰
-        plugins: 'advlist autolink lists link image charmap preview anchor',
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+        plugins: 'advlist autolink lists link image charmap preview anchor code',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | code | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
         height: '100%', // 設置高度為 100%
         setup: function (editor) {
             editor.on('init', function () {
-                var initialContent = generateMceContent();
+                var initialContent = $('#MceHtml').val();
                 editor.setContent(initialContent);
             });
 
@@ -29,28 +27,17 @@ function initializeTinyMCE() {
     });
 }
 
-// 當表單內容變化時更新編輯器內容
-function handleFormChanges() {
-    $(document).on('input change', 'input, select, textarea', function () {
-        var content = generateMceContent();
-        tinymce.get('editor').setContent(content);
-        $('#MceHtml').val(content);
-    });
-}
-
-// 表單提交時更新隱藏欄位
-function handleFormSubmit() {
-    $('form').on('submit', function () {
-        tinymce.triggerSave();
-        var mceContent = $('#MceHtml').val();
-        // mceContent 已包含最新內容
-    });
-}
-
 // 初始化問題和選項的索引
 function initializeQuestionIndices() {
     window.questionIndex = window.initialData.questionCount || 0;
     window.optionsIndices = window.initialData.optionsIndices || {};
+}
+
+// 更新 TinyMCE 編輯器的內容
+function updateMceContent() {
+    var content = generateMceContent();
+    $('#MceHtml').val(content);
+    tinymce.get('editor').setContent(content);
 }
 
 // 生成 TinyMCE 編輯器的內容
@@ -68,45 +55,50 @@ function generateMceContent() {
 
     var questionsHtml = '';
     $('#questions .question-container').each(function () {
-        var questionText = $(this).find('input[name$="Question.QuestionText"]').val();
-        var answerType = $(this).find('select[name$="Question.AnswerType"] option:selected').text();
+        var questionText = $(this).find('input[name$=".Question.QuestionText"]').val();
+        var answerTypeValue = $(this).find('select[name$=".Question.AnswerType"]').val();
+        var answerType = $(this).find('select[name$=".Question.AnswerType"] option:selected').text();
         var optionsHtml = '';
 
         var qIndex = $(this).attr('id').split('-')[1];
 
         $(this).find('.option-container').each(function () {
-            var optionText = $(this).find('input[name$="QuestionOption.OptionText"]').val();
+            var optionText = $(this).find('input[name$=".QuestionOption.OptionText"]').val();
             var optionHtml = '';
 
             switch (answerType.toLowerCase()) {
                 case '單選':
                 case 'radio':
-                    optionHtml += '<input type="radio" name="question_' + qIndex + '" /> ' + optionText;
+                    var optionId = $(this).find('input[name$=".QuestionOption.Id"]').val();
+                    optionHtml += '<input type="radio" name="Questions[' + qIndex + '].SelectedOption" value="' + optionId + '" id="option_' + optionId + '" required> ' +
+                        '<label for="option_' + optionId + '">' + optionText + '</label><br />';
                     break;
                 case '多選':
                 case 'checkbox':
-                    optionHtml += '<input type="checkbox" name="question_' + qIndex + '" /> ' + optionText;
+                    var optionId = $(this).find('input[name$=".QuestionOption.Id"]').val();
+                    optionHtml += '<input type="checkbox" name="Questions[' + qIndex + '].SelectedOptions" value="' + optionId + '" id="option_' + optionId + '"> ' +
+                        '<label for="option_' + optionId + '">' + optionText + '</label><br />';
                     break;
                 case '填空':
                 case 'text':
-                    optionHtml += '<input type="text" name="question_' + qIndex + '_option_' + $(this).attr('id').split('-')[2] + '" />';
+                    optionHtml += '<input type="text" name="Questions[' + qIndex + '].AnswerText" required class="form-control" /><br />';
                     break;
                 case '填空框':
                 case 'textarea':
-                    optionHtml += '<textarea name="question_' + qIndex + '_option_' + $(this).attr('id').split('-')[2] + '"></textarea>';
+                    optionHtml += '<textarea name="Questions[' + qIndex + '].AnswerText" required class="form-control"></textarea><br />';
                     break;
                 case '下拉選單':
                 case 'select':
-                    optionHtml += '<select name="question_' + qIndex + '_option_' + $(this).attr('id').split('-')[2] + '"><option>' + optionText + '</option></select>';
+                    optionHtml += '<select name="Questions[' + qIndex + '].AnswerText" class="form-select"><option>' + optionText + '</option></select><br />';
                     break;
                 default:
-                    optionHtml += optionText;
+                    optionHtml += optionText + '<br />';
                     break;
             }
 
-            var optionIndex = $(this).attr('id').split('-')[2];
+            var optionIdPreview = $(this).find('input[name$=".QuestionOption.Id"]').val();
             var optionImagesHtml = '';
-            $(this).find('#option-image-preview-' + qIndex + '-' + optionIndex + ' .mb-3 img').each(function () {
+            $(this).find('#option-image-preview-' + qIndex + '-' + optionIdPreview + ' .mb-3 img').each(function () {
                 var imgSrc = $(this).attr('src');
                 optionImagesHtml += '<img src="' + imgSrc + '" alt="選項圖片" style="max-width: 200px;" /><br />';
             });
@@ -115,11 +107,11 @@ function generateMceContent() {
                 optionHtml += '<br />' + optionImagesHtml;
             }
 
-            optionsHtml += optionHtml + '<br />';
+            optionsHtml += optionHtml;
         });
 
         var questionImagesHtml = '';
-        $(this).find('#question-image-preview-' + qIndex + ' .mb-3 img').each(function () {
+        $(this).find('.question-image-preview img').each(function () { // 修改選擇器
             var imgSrc = $(this).attr('src');
             questionImagesHtml += '<img src="' + imgSrc + '" alt="問題圖片" style="max-width: 200px;" /><br />';
         });
@@ -129,12 +121,14 @@ function generateMceContent() {
             questionHtml += '<div>' + questionImagesHtml + '</div>';
         }
         if (optionsHtml) {
-            questionHtml += optionsHtml + '<br />';
+            questionHtml += '<div>' + optionsHtml + '</div>';
         }
         questionsHtml += questionHtml;
     });
 
-    var content = '<h1>' + title + '<span style="font-size: 0.7em; margin-left: 10px;">' + '站別: ' + stationName + '   頁數：' + questionNum + '</span></h1>' +
+    var content = '<h1>' + title + '<span style="font-size: 0.7em; margin-left: 10px;">' +
+        '站別: ' + stationName + ' 頁數：' + questionNum +
+        '</span></h1>' +
         '<p>' + description + '</p>';
 
     if (surveyImagesHtml) {
@@ -156,8 +150,7 @@ function removeImage(imageId) {
             if (response.success) {
                 toastr.success(response.message);
                 $('button[onclick="removeImage(' + imageId + ')"]').closest('.mb-3').remove();
-                var content = generateMceContent();
-                tinymce.get('editor').setContent(content);
+                updateMceContent();
             } else {
                 toastr.error(response.message);
             }
@@ -181,9 +174,13 @@ function addQuestion() {
             </div>
             <div class="mb-3">
                 <label class="form-label">問題類型</label>
-                <select name="QuestionVMs[${questionIndex}].Question.AnswerType" class="form-select">
+                <select name="QuestionVMs[${questionIndex}].Question.AnswerType" class="form-select" onchange="updateMceContent()">
                     ${generateQuestionTypeOptions()}
                 </select>
+            </div>
+            <!-- 問題圖片預覽區域 -->
+            <div class="mb-3 question-image-preview" id="question-image-preview-${questionIndex}">
+                <!-- 新增的問題圖片會在這裡預覽 -->
             </div>
             <div class="mb-3">
                 <label class="form-label">上傳問題圖片</label>
@@ -199,11 +196,11 @@ function addQuestion() {
             <button type="button" class="btn btn-primary" onclick="addOption(${questionIndex})">新增選項</button>
             <button type="button" class="btn btn-danger mt-2" onclick="removeQuestion(${questionIndex}, 0)">刪除問題</button>
         </div>`;
-
     $('#questions').append(questionHtml);
     questionIndex++;
 
-    tinymce.get('editor').setContent(generateMceContent());
+    // 更新 TinyMCE 編輯器的內容
+    updateMceContent();
 }
 
 // 生成問題類型的選項 HTML
@@ -228,6 +225,7 @@ function removeQuestion(index, questionId) {
                     $('#question-' + index).remove();
                     toastr.success(response.message);
                     reindexQuestions();
+                    updateMceContent();
                 } else {
                     toastr.error(response.message);
                 }
@@ -239,8 +237,8 @@ function removeQuestion(index, questionId) {
     } else {
         $('#question-' + index).remove();
         reindexQuestions();
+        updateMceContent();
     }
-    tinymce.get('editor').setContent(generateMceContent());
 }
 
 // 重新整理問題索引的函數
@@ -272,7 +270,7 @@ function addOption(questionIndex) {
         <div class="mb-2 option-container" id="option-${questionIndex}-${optionIndex}">
             <input type="hidden" name="QuestionVMs[${questionIndex}].QuestionOptionVMs[${optionIndex}].QuestionOption.Id" value="0" />
             <label class="form-label">選項 ${optionIndex + 1}</label>
-            <input name="QuestionVMs[${questionIndex}].QuestionOptionVMs[${optionIndex}].QuestionOption.OptionText" class="form-control" />
+            <input name="QuestionVMs[${questionIndex}].QuestionOptionVMs[${optionIndex}].QuestionOption.OptionText" class="form-control" onchange="updateMceContent()" />
             <button type="button" class="btn btn-danger" onclick="removeOption(${questionIndex}, ${optionIndex}, 0)">刪除選項</button>
             <div class="mb-3">
                 <label class="form-label">上傳選項圖片</label>
@@ -289,7 +287,7 @@ function addOption(questionIndex) {
 
     $(`#options-${questionIndex}`).append(optionHtml);
     window.optionsIndices[questionIndex]++;
-    tinymce.get('editor').setContent(generateMceContent());
+    updateMceContent();
 }
 
 // 刪除選項的函數
@@ -304,6 +302,7 @@ function removeOption(questionIndex, optionIndex, optionId) {
                     $(`#option-${questionIndex}-${optionIndex}`).remove();
                     toastr.success(response.message);
                     reindexOptions(questionIndex);
+                    updateMceContent();
                 } else {
                     toastr.error(response.message);
                 }
@@ -315,8 +314,8 @@ function removeOption(questionIndex, optionIndex, optionId) {
     } else {
         $(`#option-${questionIndex}-${optionIndex}`).remove();
         reindexOptions(questionIndex);
+        updateMceContent();
     }
-    tinymce.get('editor').setContent(generateMceContent());
 }
 
 // 重新整理選項索引的函數
@@ -342,6 +341,7 @@ function reindexOptions(questionIndex) {
 function addSurveyImageUploadField() {
     var html = '<div class="mb-2"><input type="file" name="SurveyImageFiles" class="form-control" onchange="previewAndSyncImage(this, \'survey\')" /></div>';
     $('#survey-image-upload-container').append(html);
+    updateMceContent();
 }
 
 // 新增問題圖片上傳欄位的函數
@@ -351,6 +351,7 @@ function addQuestionImageUploadField(questionIndex) {
             <input type="file" name="QuestionVMs[${questionIndex}].QuestionImageFiles" class="form-control" onchange="previewAndSyncImage(this, 'question', ${questionIndex})" />
         </div>`;
     $(`#question-image-upload-container-${questionIndex}`).append(html);
+    updateMceContent();
 }
 
 // 新增選項圖片上傳欄位的函數
@@ -360,6 +361,7 @@ function addOptionImageUploadField(questionIndex, optionIndex) {
             <input type="file" name="QuestionVMs[${questionIndex}].QuestionOptionVMs[${optionIndex}].OptionImageFiles" class="form-control" onchange="previewAndSyncImage(this, 'option', ${questionIndex}, ${optionIndex})" />
         </div>`;
     $(`#option-image-upload-container-${questionIndex}-${optionIndex}`).append(html);
+    updateMceContent();
 }
 
 // 當圖片上傳時，更新 TinyMCE 編輯器中的圖片內容
@@ -400,7 +402,7 @@ function previewAndSyncImage(input, type, questionIndex, optionIndex) {
                 $('#option-image-preview-' + questionIndex + '-' + optionIndex).append(previewImage);
             }
 
-            tinymce.get('editor').setContent(generateMceContent());
+            updateMceContent(); // 更新 MceHtml
         }
         reader.readAsDataURL(file);
     }
@@ -409,5 +411,5 @@ function previewAndSyncImage(input, type, questionIndex, optionIndex) {
 // 刪除預覽圖片
 function removePreviewImage(button) {
     $(button).parent().remove();
-    tinymce.get('editor').setContent(generateMceContent());
+    updateMceContent(); // 更新 MceHtml
 }

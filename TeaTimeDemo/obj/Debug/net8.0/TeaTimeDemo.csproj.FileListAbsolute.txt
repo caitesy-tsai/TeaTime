@@ -314,3 +314,7 @@ C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\Microsoft.E
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\TeaTimeDemo.Hubs.dll
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\TeaTimeDemo.Hubs.pdb
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\obj\Debug\net8.0\TeaTimeDemo.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\obj\Debug\net8.0\TeaTimeDemo.sourcelink.json
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo\bin\Debug\net8.0\AutoMapper.dll

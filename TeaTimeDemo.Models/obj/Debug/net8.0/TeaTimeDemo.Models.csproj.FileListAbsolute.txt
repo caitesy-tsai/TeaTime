@@ -10,3 +10,4 @@ C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Models\obj\Debug\net8.0\refi
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Models\obj\Debug\net8.0\TeaTimeDemo.Models.pdb
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Models\obj\Debug\net8.0\ref\TeaTimeDemo.Models.dll
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Models\obj\Debug\net8.0\TeaTimeDemo.Models.csproj.AssemblyReference.cache
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Models\obj\Debug\net8.0\TeaTimeDemo.Models.sourcelink.json

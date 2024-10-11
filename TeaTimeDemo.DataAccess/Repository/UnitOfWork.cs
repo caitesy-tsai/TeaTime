@@ -59,6 +59,12 @@ namespace TeaTimeDemo.DataAccess.Repository
             _db.SaveChanges();
         }
 
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
+        }
+        
+
         // Dispose 方法，當不再需要 UnitOfWork 時釋放資源
         public void Dispose()
         {

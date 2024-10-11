@@ -1,11 +1,12 @@
 ﻿@model TeaTimeDemo.Models.ViewModels.SurveyVM
 
 <!-- 問卷基本資訊 -->
+<!-- 類別選擇 -->
 <div class="mb-3 row">
-    <label asp-for="Survey.CategoryName" class="col-md-2 col-form-label">類別</label>
+    <label asp-for="Survey.CategoryId" class="col-md-2 col-form-label">類別</label>
     <div class="col-md-10">
-        <select asp-for="Survey.CategoryName" asp-items="Model.CategoryList" class="form-select"></select>
-        <span asp-validation-for="Survey.CategoryName" class="text-danger"></span>
+        <select asp-for="Survey.CategoryId" asp-items="Model.CategoryList" class="form-select"></select>
+        <span asp-validation-for="Survey.CategoryId" class="text-danger"></span>
     </div>
 </div>
 

@@ -6,23 +6,26 @@ $(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            url: '/admin/survey/getall'  // 使用 AJAX 獲取所有 Notes 的資料
+            url: '/admin/survey/getall',
+            type: "GET",
+            datatype: "json",
+            "dataSrc": "data"
         },
         "fixedHeader": true,
         "columns": [
-            { data: 'categoryName', "width": "10%" },  // 新增類別欄位
-            { data: 'title', "width": "15%" },
-            { data: 'stationName', "width": "10%" },
-            { data: 'description', "width": "15%" },
-            { data: 'questionNum', "width": "5%" }, // 顯示頁數
-            { data: 'isPublished', "width": "5%", "render": function (data) { return data ? '是' : '否'; } }, // 顯示是否發佈
-            { data: 'createTime', "width": "10%", "render": function (data) { return new Date(data).toLocaleString(); } }, // 顯示創立時間
-            { data: 'completeTime', "width": "10%", "render": function (data) { return data ? new Date(data).toLocaleString() : '未完成'; } }, // 顯示完成時間
-            { data: 'jobName', "width": "10%" },
+            { "data": "categoryName", "width": "10%" },  // 確保與 SurveyDTO 的 CategoryName 對應
+            { "data": "title", "width": "15%" },
+            { "data": "stationName", "width": "10%" },
+            { "data": "description", "width": "15%" },
+            { "data": "questionNum", "width": "5%" },
+            { "data": "isPublished", "width": "5%" },
+            { "data": "createTime", "width": "10%", "render": function (data) { return data; } },
+            { "data": "completeTime", "width": "10%", "render": function (data) { return data; } },
+            { "data": "jobName", "width": "10%" },
             {
-                data: 'id',
+                "data": "id",
                 "render": function (data, type, row) {
-                    var publishButton = row.isPublished
+                    var publishButton = row.isPublished === "是"
                         ? `<button class="btn btn-secondary mx-2" onclick="togglePublish(${data})">取消發佈</button>`
                         : `<button class="btn btn-secondary mx-2" onclick="togglePublish(${data})">發佈</button>`;
 
@@ -31,7 +34,7 @@ function loadDataTable() {
                             <a href="/admin/survey/upsert?id=${data}" class="btn btn-primary mx-2">
                                 <i class="bi bi-pencil-square"></i> 編輯
                             </a>
-                            <button class="btn btn-danger mx-2" onClick=Delete('/admin/survey/delete/${data}')>
+                            <button class="btn btn-danger mx-2" onClick="Delete('/admin/survey/delete/${data}')">
                                 <i class="bi bi-trash-fill"></i> 刪除
                             </button>
                             ${publishButton}
@@ -39,7 +42,10 @@ function loadDataTable() {
                 },
                 "width": "20%"
             }
-        ]
+        ],
+        "language": {
+            "url": "/js/i18n/Chinese-traditional.json"
+        }
     });
 }
 

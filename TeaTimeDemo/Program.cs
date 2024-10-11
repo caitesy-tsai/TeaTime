@@ -10,6 +10,9 @@ using TeaTimeDemo.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore.Proxies;
+using AutoMapper;
+using TeaTimeDemo.Mapping; // 引用 AutoMapperProfile 的命名空間
 
 
 
@@ -21,7 +24,10 @@ builder.Services.AddControllersWithViews();
 
 // 配置資料庫連線
 builder.Services.AddDbContext<ApplicationDbContext>(options=>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+      .EnableSensitiveDataLogging() // 啟用敏感資料日誌，注意：僅在開發環境中啟用，因為它可能洩露敏感資訊。
+      .UseLazyLoadingProxies() // 啟用懶加載代理
+    );
 
 // 配置 Identity 系統
 builder.Services.AddIdentity<IdentityUser,IdentityRole>(options =>
@@ -52,6 +58,9 @@ builder.Services.AddSignalR();
 
 // 加入對 Razor Pages 的支援
 builder.Services.AddRazorPages();//新增登登錄
+
+// 註冊 AutoMapper 並掃描 Mapping 資料夾中的配置檔案
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

@@ -15,3 +15,4 @@ C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Hub\obj\Debug\net8.0\TeaTime
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Hub\obj\Debug\net8.0\refint\TeaTimeDemo.Hubs.dll
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Hub\obj\Debug\net8.0\TeaTimeDemo.Hubs.pdb
 C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Hub\obj\Debug\net8.0\ref\TeaTimeDemo.Hubs.dll
+C:\Users\22503\source\repos\TeaTimeDemo\TeaTimeDemo.Hub\obj\Debug\net8.0\TeaTimeDemo.Hubs.sourcelink.json

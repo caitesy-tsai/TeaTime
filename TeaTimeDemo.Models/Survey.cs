@@ -20,7 +20,7 @@ namespace TeaTimeDemo.Models
 
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }  // 導航屬性，關聯到 ApplicationUser
+        public virtual ApplicationUser ApplicationUser { get; set; }  // 導航屬性，關聯到 ApplicationUser
 
         // 儲存建立人姓名，設限 100 字元長度
         [MaxLength(100)]
@@ -30,9 +30,22 @@ namespace TeaTimeDemo.Models
         [MaxLength(50)]
         public string? JobNum { get; set; }
 
-        // 類別名稱
+
+        // 新增 CategoryId 屬性，作為外鍵
         [Required(ErrorMessage = "類別是必填欄位")]
-        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        [ValidateNever]
+        public virtual Category Category { get; set; }  // 導航屬性，關聯到 Category
+
+        // 保留 CategoryName 屬性以兼容現有功能
+        [NotMapped] // 使用 [NotMapped] 防止 EF Core 自動映射
+        public string CategoryName
+        {
+            get => Category?.Name;
+            set { /* 可選：根據需要實現設置邏輯 */ }
+        }
 
         // 問卷標題，必填，並設限 200 字元長度
         [Required(ErrorMessage = "分類標題是必填欄位")]

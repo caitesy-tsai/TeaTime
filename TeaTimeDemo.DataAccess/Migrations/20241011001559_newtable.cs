@@ -302,14 +302,14 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     JobName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     JobNum = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuestionNum = table.Column<int>(type: "int", nullable: true),
                     IsPublished = table.Column<bool>(type: "bit", nullable: false),
                     MceHtml = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CompleteTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -321,6 +321,12 @@ namespace TeaTimeDemo.DataAccess.Migrations
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Surveys_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -363,7 +369,7 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     QuestionText = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     AnswerType = table.Column<int>(type: "int", nullable: false),
                     MceHtml = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CompleteTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -389,7 +395,7 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     MtNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AnswerType = table.Column<int>(type: "int", nullable: false),
                     AnswerText = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CompleteTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -472,7 +478,7 @@ namespace TeaTimeDemo.DataAccess.Migrations
                     QuestionOptionId = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     AltText = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    UploadTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UploadTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     SortOrder = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -501,9 +507,9 @@ namespace TeaTimeDemo.DataAccess.Migrations
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "茶飲" },
-                    { 2, 2, "水果茶" },
-                    { 3, 3, "咖啡" }
+                    { 1, 1, "硬板" },
+                    { 2, 2, "汽車板" },
+                    { 3, 3, "軟硬板" }
                 });
 
             migrationBuilder.InsertData(
@@ -650,6 +656,11 @@ namespace TeaTimeDemo.DataAccess.Migrations
                 name: "IX_Surveys_ApplicationUserId",
                 table: "Surveys",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Surveys_CategoryId",
+                table: "Surveys",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -704,13 +715,13 @@ namespace TeaTimeDemo.DataAccess.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "Surveys");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Stores");

@@ -22,11 +22,11 @@ namespace TeaTimeDemo.DataAccess.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>(); // 設定對應的 DbSet
-            _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
+          //  _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
         }
 
         // 取得所有資料，支持條件篩選和關聯屬性
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet; // 建立基本查詢
 

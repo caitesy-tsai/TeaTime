@@ -18,7 +18,7 @@ namespace TeaTimeDemo.Models
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         [Required]
         public DateTime OrderDate { get; set; }
         public double OrderTotal { get; set; }

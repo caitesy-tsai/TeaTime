@@ -85,8 +85,24 @@
       "PackagePath": "staticwebassets\\images\\option\\603222c0-9c8d-43ce-9a53-4457d2f1a55a.png"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\option\\6e45ee50-f131-4679-a8a3-f00e410982d4.png",
+      "PackagePath": "staticwebassets\\images\\option\\6e45ee50-f131-4679-a8a3-f00e410982d4.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\option\\70de97eb-66bb-41ae-b39d-13c32e593502.png",
+      "PackagePath": "staticwebassets\\images\\option\\70de97eb-66bb-41ae-b39d-13c32e593502.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\option\\838ab85f-0af5-4aab-b423-e3329a6f75cc.png",
+      "PackagePath": "staticwebassets\\images\\option\\838ab85f-0af5-4aab-b423-e3329a6f75cc.png"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\option\\96583c97-88e1-4d79-92bb-caae50daa9ad.png",
       "PackagePath": "staticwebassets\\images\\option\\96583c97-88e1-4d79-92bb-caae50daa9ad.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\option\\ff34e27c-9cef-4528-b108-ad1934ff5a74.webp",
+      "PackagePath": "staticwebassets\\images\\option\\ff34e27c-9cef-4528-b108-ad1934ff5a74.webp"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\product\\049bb83e-face-45be-b12b-6b7387831d7a.png",
@@ -153,16 +169,44 @@
       "PackagePath": "staticwebassets\\images\\product\\fd963037-3431-4c54-9189-80c11d2921d3.png"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\11c656dd-c704-42e3-8931-1f4545dcfac6.png",
+      "PackagePath": "staticwebassets\\images\\question\\11c656dd-c704-42e3-8931-1f4545dcfac6.png"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\1f7f7994-82ad-40a8-9fd8-53a9532ef592.png",
       "PackagePath": "staticwebassets\\images\\question\\1f7f7994-82ad-40a8-9fd8-53a9532ef592.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\4e6122a3-b1d8-43b2-b60d-e2e240cfc102.png",
+      "PackagePath": "staticwebassets\\images\\question\\4e6122a3-b1d8-43b2-b60d-e2e240cfc102.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\559d967e-d0c0-49db-8965-1161fe24361a.png",
+      "PackagePath": "staticwebassets\\images\\question\\559d967e-d0c0-49db-8965-1161fe24361a.png"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\625ffb23-a1d9-465f-9516-2b0ec213b3bd.png",
       "PackagePath": "staticwebassets\\images\\question\\625ffb23-a1d9-465f-9516-2b0ec213b3bd.png"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\a9d6848c-39d1-4331-a9d1-b51cb6a9b907.png",
+      "PackagePath": "staticwebassets\\images\\question\\a9d6848c-39d1-4331-a9d1-b51cb6a9b907.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\b6758fb7-a8ff-4849-b2bc-afb648cc3515.png",
+      "PackagePath": "staticwebassets\\images\\question\\b6758fb7-a8ff-4849-b2bc-afb648cc3515.png"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\bcbd15df-1d06-45ca-adf0-4697bd9a78bf.png",
       "PackagePath": "staticwebassets\\images\\question\\bcbd15df-1d06-45ca-adf0-4697bd9a78bf.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\cc93b913-b8be-41d5-bba1-7f3bfeffa2b6.png",
+      "PackagePath": "staticwebassets\\images\\question\\cc93b913-b8be-41d5-bba1-7f3bfeffa2b6.png"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\d57e2e25-e719-4f07-8d36-f73077f1d074.png",
+      "PackagePath": "staticwebassets\\images\\question\\d57e2e25-e719-4f07-8d36-f73077f1d074.png"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\question\\fdef5de4-2ca7-4da3-8b6b-8376b262fd29.png",
@@ -249,12 +293,24 @@
       "PackagePath": "staticwebassets\\images\\survey\\642b83cc-f2d5-4b37-abf0-b77f7c091a91.webp"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\67220b95-05ad-4ab5-8972-6a4aa3df1f84.webp",
+      "PackagePath": "staticwebassets\\images\\survey\\67220b95-05ad-4ab5-8972-6a4aa3df1f84.webp"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\6c822b71-9163-4a85-9477-61e8cf4c3ee5.png",
       "PackagePath": "staticwebassets\\images\\survey\\6c822b71-9163-4a85-9477-61e8cf4c3ee5.png"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\7001ae57-777d-4819-a302-bb8e122076b4.webp",
       "PackagePath": "staticwebassets\\images\\survey\\7001ae57-777d-4819-a302-bb8e122076b4.webp"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\713a72d6-18d2-4b45-a256-969ad865c673.webp",
+      "PackagePath": "staticwebassets\\images\\survey\\713a72d6-18d2-4b45-a256-969ad865c673.webp"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\741a25d9-e74e-48e3-8581-4ca16ae4eaae.webp",
+      "PackagePath": "staticwebassets\\images\\survey\\741a25d9-e74e-48e3-8581-4ca16ae4eaae.webp"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\8330f633-17cb-4b04-935b-a5b5b87e6041.png",
@@ -317,6 +373,10 @@
       "PackagePath": "staticwebassets\\images\\survey\\cfa6416a-4679-47de-928a-b7a217ba5f3c.png"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\d4fb0e88-d8fe-43ae-a251-e13909fffa47.webp",
+      "PackagePath": "staticwebassets\\images\\survey\\d4fb0e88-d8fe-43ae-a251-e13909fffa47.webp"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\d6f44c84-85bd-44e0-b08d-c91087b54189.png",
       "PackagePath": "staticwebassets\\images\\survey\\d6f44c84-85bd-44e0-b08d-c91087b54189.png"
     },
@@ -353,8 +413,16 @@
       "PackagePath": "staticwebassets\\images\\survey\\fe2db798-6098-4c27-ab0f-57a94d629241.png"
     },
     {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\images\\survey\\ff42d6d9-3545-4c4a-8c35-abe042910f6f.webp",
+      "PackagePath": "staticwebassets\\images\\survey\\ff42d6d9-3545-4c4a-8c35-abe042910f6f.webp"
+    },
+    {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\js\\editor.js",
       "PackagePath": "staticwebassets\\js\\editor.js"
+    },
+    {
+      "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\js\\i18n\\Chinese-traditional.json",
+      "PackagePath": "staticwebassets\\js\\i18n\\Chinese-traditional.json"
     },
     {
       "Id": "C:\\Users\\22503\\source\\repos\\TeaTimeDemo\\TeaTimeDemo\\wwwroot\\js\\image-upload.js",

@@ -33,5 +33,7 @@ namespace TeaTimeDemo.DataAccess.Repository.IRepository
         IQuestionOptionRepository QuestionOption { get; }
 
         void Save();
+
+        void SaveChanges();
     }
 }

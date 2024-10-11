@@ -18,17 +18,17 @@ namespace TeaTimeDemo.Models
         // SurveyId，用於關聯到問卷，如果圖片屬於問卷，則此欄位有值
         public int? SurveyId { get; set; }
         [ForeignKey("SurveyId")]
-        public Survey? Survey { get; set; } // 導覽屬性，關聯到 Survey
+        public virtual Survey? Survey { get; set; } // 導覽屬性，關聯到 Survey
 
         // QuestionId，用於關聯到問題，如果圖片屬於問題，則此欄位有值
         public int? QuestionId { get; set; }
         [ForeignKey("QuestionId")]
-        public Question? Question { get; set; } // 導覽屬性，關聯到 Question
+        public virtual Question? Question { get; set; } // 導覽屬性，關聯到 Question
 
         // QuestionOptionId，用於關聯到選項，如果圖片屬於選項，則此欄位有值
         public int? QuestionOptionId { get; set; }
         [ForeignKey("QuestionOptionId")]
-        public QuestionOption? QuestionOption { get; set; } // 導覽屬性，關聯到 QuestionOption
+        public virtual QuestionOption? QuestionOption { get; set; } // 導覽屬性，關聯到 QuestionOption
 
         [Required]
         [MaxLength(500)]
