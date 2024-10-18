@@ -1,0 +1,93 @@
+/* 調整 html 頁面的基礎字體大小，當螢幕寬度超過 768px 時字體變大 */
+html {
+    font-size: 14px;
+    position: relative; /* 保持相對定位 */
+    min-height: 100%; /* 確保頁面內容至少佔滿螢幕高度 */
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px; /* 在寬度超過768px時字體變大 */
+    }
+}
+
+/* 按鈕、連結和表單焦點時的樣式設定，增加藍色邊框陰影 */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb; /* 白色內陰影+藍色外陰影 */
+}
+
+/* 調整 body 底部的間距，確保 footer 不會覆蓋內容 */
+body {
+    margin-bottom: 60px; /* 保留 60px 的底部空間 */
+}
+
+/* 表格增加橫向捲軸樣式，以應對超寬內容 */
+.table-responsive {
+    overflow-x: auto; /* 允許橫向滾動 */
+    white-space: nowrap; /* 防止表格自動換行 */
+}
+
+/* 表格寬度設定 */
+.table {
+    width: 100%; /* 預設表格寬度佔滿 100% */
+    min-width: 1000px; /* 強制表格最小寬度，避免表格過窄 */
+}
+
+
+/* 使用 Flexbox 調整 .row 內部列的高度一致 */
+.row.equal-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+/* 將 .col- 類別的子元素也設為 Flex 容器，並垂直排列內容 */
+.row.equal-height > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 調整左側表單和右側編輯器的區域，使其在大螢幕下並排，並在小螢幕下堆疊 */
+@media (min-width: 768px) {
+    .editor-section,
+    .form-section {
+        flex: 1;/* 兩者均分可用空間 */
+    }
+}
+
+/* 確保 editor-section 填滿父容器的高度 */
+.editor-section {
+    display: flex;
+    flex-direction: column; /* 垂直排列內容 */
+}
+
+    /* 確保 textarea 填滿 editor-section 的可用空間 */
+    .editor-section textarea {
+        flex: 1; /* 填滿剩餘空間 */
+        min-height: 300px; /* 設定一個最小高度，根據需要調整 */
+    }
+
+/* 新增：圖片預覽容器的樣式，讓問卷、問題和選項圖片以彈性布局顯示 */
+#survey-preview,
+#question-preview,
+#option-preview,
+#survey-image-preview,
+#question-image-preview-*, /* 適用於所有 question-image-preview-@i */
+#option-image-preview-*-* /* 適用於所有 option-image-preview-@i-@j */ {
+    display: flex; /* 使用 flexbox 彈性佈局 */
+    flex-wrap: wrap; /* 當圖片超過容器寬度時，自動換行 */
+}
+
+    /* 新增：圖片預覽樣式，限制圖片大小並增加間距 */
+    #survey-preview img,
+    #question-preview img,
+    #option-preview img,
+    #survey-image-preview img,
+    #question-image-preview-* img, /* 適用於所有 question-image-preview-@i */
+    #option-image-preview-*-* img /* 適用於所有 option-image-preview-@i-@j */ {
+        margin: 5px; /* 每張圖片之間的間距 */
+        max-width: 150px; /* 圖片最大寬度為 150px */
+    }

@@ -1,0 +1,78 @@
+﻿<div class="container">
+    <h2 class="text-primary">Notes 管理</h2>
+
+    <!-- 新增與匯入匯出功能按鈕區 -->
+    <div class="row pb-3">
+        <div class="col-md-6">
+            <!-- 新增 Notes 的按鈕 -->
+            <a href="/admin/survey/upsert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> 新增 Notes
+            </a>
+        </div>
+
+        <!-- 匯入與匯出 Excel 按鈕，放在同一行 -->
+        <div class="col-md-6 text-end">
+            <!-- 匯出 Excel 按鈕 -->
+            <a asp-controller="Survey" asp-action="ExportToExcel" class="btn btn-success d-inline-block">
+                <i class="bi bi-file-earmark-excel"></i> 匯出 Excel
+            </a>
+            <!-- 匯入 Excel 的按鈕 -->
+            <a href="javascript:void(0);" onclick="showImportExport()" class="btn btn-primary d-inline-block ms-2">
+                <i class="bi bi-file-earmark-arrow-up"></i> 匯入 Excel
+            </a>
+        </div>
+    </div>
+
+    <!-- 匯入文件上傳區，初始隱藏 -->
+    <div class="row pb-3" id="importExportSection" style="display: none;">
+        <div class="col-md-12">
+            <form method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <!-- 文件選擇器 -->
+                    <input type="file" name="file" class="form-control" />
+                    <!-- 匯入/匯出新增資料按鈕 -->
+                    <button formaction="@Url.Action("ImportExcel", "Survey", new { replaceExistingData = false })" class="btn btn-primary">匯入新增資料</button>
+                    <button formaction="@Url.Action("ImportExcel", "Survey", new { replaceExistingData = true })" class="btn btn-danger">取代現有資料</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- 資料表區域 -->
+    <div class="table-responsive">
+        <table id="tblData" class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>類別</th>
+                    <th>問卷標題</th>
+                    <th>站別</th>
+                    <th>描述</th>
+                    <th>頁數</th>
+                    <th>發佈</th>
+                    <th>創立時間</th>
+                    <th>完成時間</th>
+                    <th>建立人</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 由 DataTables 通過 AJAX 填充資料 -->
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts {
+    <!-- 引入 survey.js -->
+    <script src="~/js/survey.js" asp-append-version="true"></script>
+
+    <!-- 顯示匯入/匯出區域的 JavaScript -->
+    <script>
+        function showImportExport() {
+            document.getElementById('importExportSection').style.display = 'block';
+        }
+    </script>
+}
